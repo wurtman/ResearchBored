@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-5 justify-content-start align-items-start mb-lg-2">
+      <h3 class="mb-2 mb-lg-0 fw-bold">
+        Show Account
+      </h3>
+    </div>
+    <div class="col-12 col-lg-auto flex-1 ms-auto justify-content-center align-items-end mb-lg-2">
+      <%= render 'actions', being: 'show', account: @account %>
+    </div>
+  </div>
+  <div class="card p-3 p-lg-4 flex-column justify-content-center align-items-between mb-2">
+    <div class="container-fluid">
+
+      <dl class="mb-4">
+        <dt class="">Id</dt>
+        <dd class="fs-small text-muted m-0">Technical ID in the database</dd>
+        <dd class=""><%= @account.id %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Name</dt>
+        <dd class="fs-small text-muted m-0">Public name</dd>
+        <dd class=""><%= @account.profile.name %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">E-mail</dt>
+        <dd class="fs-small text-muted m-0">Email of this account</dd>
+        <dd class=""><%= @account.email %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Role</dt>
+        <dd class="fs-small text-muted m-0">Role of this account</dd>
+        <dd class=""><%= @account.role %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Status</dt>
+        <dd class="fs-small text-muted m-0">Status of this account - accounts created through the admin are considered as verified</dd>
+        <dd class=""><%= @account.status %></dd>
+      </dl>
+
+      <%= link_to 'Edit', edit_admin_account_path(@account), class: "btn btn-primary btn btn-dark btn-sm px-3" %>
+      <%= link_to 'Back', admin_accounts_path, class: "btn bg-white btn-sm px-3" %>
+    </div>
+  </div>
+</div>
+

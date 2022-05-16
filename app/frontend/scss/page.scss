@@ -1,0 +1,29 @@
+
+$page-font-size-base: 1.2rem;
+
+.page {
+
+  @include font-size($page-font-size-base);
+
+  h1 {
+    @include font-size($page-font-size-base * 2.5);
+  }
+  h2 {
+    @include font-size($page-font-size-base * 2);
+  }
+  h3 {
+    @include font-size($page-font-size-base * 1.75);
+  }
+  h4 {
+    @include font-size($page-font-size-base * 1.5);
+  }
+  h5 {
+    @include font-size($page-font-size-base * 1.25);
+  }
+  h6 {
+    @include font-size($page-font-size-base);
+  }
+  p {
+    margin-bottom: 1.5rem;
+  }
+}

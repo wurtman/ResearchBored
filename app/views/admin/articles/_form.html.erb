@@ -1,0 +1,176 @@
+<% triggered_validation = !!local_assigns[:triggered_validation] || !!params[:triggered_validation] %>
+<% errors_h = @article.errors.to_hash %>
+
+<%= form_with(model: [:admin, article]) do |form| %>
+
+    <div class="form-group mb-1">
+      <% is_valid_slug = triggered_validation && errors_h[:slug].blank? && @article.slug.present?  %>
+      <% is_invalid_slug = !!errors_h[:slug]  %>
+      <%= form.label "slug-input", 'Slug *', class: "mb-0 fw-600" %>
+      <small id="hint_id_slug" class="form-text text-muted d-block my-0">
+        Required - Will appear after /blog in the URL, i.e. /blog/my-article
+      </small>
+      <%= form.text_field 'slug', 
+            value: @article.slug, 
+            id: "slug-input", 
+            placeholder: 'Example : my-article',
+            class: "form-control #{"is-invalid" if is_invalid_slug} #{"is-valid" if is_valid_slug}", aria: ({ invalid: is_invalid_slug, describedby: "slug_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:slug][0], class: "invalid-feedback", id: "slug_message") if is_invalid_slug %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "slug_message") if is_valid_slug  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_kontent = triggered_validation && errors_h[:kontent].blank? && @article.kontent.present?  %>
+      <% is_invalid_kontent = !!errors_h[:kontent]  %>
+      <%= form.label "kontent-input", 'Content', class: "mb-0 fw-600" %>
+      <small id="hint_id_kontent" class="form-text text-muted d-block my-0">
+        Optional, but recommended. Actual content of your article. Markdown, HTML, or plain text are accepted.
+      </small>
+      <div id="editorSection"></div>
+      <%= form.text_field 'kontent', 
+            value: @article.kontent, 
+            id: "kontent-input", 
+            style: "height: 0",
+            class: "invisible mb-0 form-control #{"is-invalid" if is_invalid_kontent} #{"is-valid" if is_valid_kontent}", aria: ({ invalid: is_invalid_kontent, describedby: "kontent_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:kontent][0], class: "invalid-feedback", id: "kontent_message", style: "margin-top:-.8rem") if is_invalid_kontent %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "kontent_message", style: "margin-top:-.8rem") if is_valid_kontent  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_title = triggered_validation && errors_h[:title].blank? && @article.title.present?  %>
+      <% is_invalid_title = !!errors_h[:title]  %>
+      <%= form.label "title-input", 'Title *', class: "mb-0 fw-600" %>
+      <small id="hint_id_title" class="form-text text-muted d-block my-0">
+        Required - Title will be shown in SEO results, and tab title of the browser.
+      </small>
+      <%= form.text_field 'title', 
+            value: @article.title, 
+            id: "title-input", 
+            placeholder: 'Example : My Article Title',
+            class: "form-control #{"is-invalid" if is_invalid_title} #{"is-valid" if is_valid_title}", aria: ({ invalid: is_invalid_title, describedby: "title_message" } if triggered_validation ) %> 
+      <%= content_tag(:span, errors_h[:title][0], class: "invalid-feedback", id: "title_message") if is_invalid_title %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "title_message") if is_valid_title  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_description = triggered_validation && errors_h[:description].blank? && @article.description.present?  %>
+      <% is_invalid_description = !!errors_h[:description]  %>
+      <%= form.label "description-input", 'Description', class: "mb-0 fw-600" %>
+      <small id="hint_id_description" class="form-text text-muted d-block my-0">
+        Optional, but recommended : this will be shown in SEO result under the title
+      </small>
+      <%= form.text_field 'description', 
+            value: @article.description, 
+            id: "description-input", 
+            class: "form-control #{"is-invalid" if errors_h[:description]} #{"is-valid" if is_valid_description}", aria: ({ invalid: is_invalid_description, describedby: "description_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:description][0], class: "invalid-feedback", id: "description_message") if is_invalid_description %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "description_message") if is_valid_description  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_image_url = triggered_validation && errors_h[:image_url].blank? && @article.image_url.present?  %>
+      <% is_invalid_image_url = !!errors_h[:image_url]  %>
+      <%= form.label "image_url-input", 'Image URL', class: "mb-0 fw-600" %>
+      <small id="hint_id_image_url" class="form-text text-muted d-block my-0">
+        Optional. Image_url will appear when you share link on social media, for example. URL format only.
+      </small>
+      <%= form.text_field 'image_url', 
+            value: @article.image_url, 
+            id: "image_url-input", 
+            placeholder: 'Example : https://image_url-service.com/myimage_url.png',
+            class: "form-control #{"is-invalid" if errors_h[:image_url]} #{"is-valid" if is_valid_image_url}", aria: ({ invalid: is_invalid_image_url, describedby: "image_url_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:image_url][0], class: "invalid-feedback", id: "image_url_message") if is_invalid_image_url %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "image_url_message") if is_valid_image_url  %>
+    </div>
+
+    <div class="form-group mb-4">
+      <%= form.label "publication_date-input", 'Publication date', class: "mb-0 fw-600" %>
+      <small id="hint_id_publication_date" class="form-text text-muted d-block my-0">
+        Required. The date that will appear inside the blog article as the publication date.
+      </small>
+      <%= form.date_select 'publication_date', 
+            start_year: 2000,
+            end_year: Time.now.year,
+            value: @article.publication_date, 
+            id: "publication_date-input", 
+            class: "form-control" %> 
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_is_published = triggered_validation && errors_h[:is_published].blank? && @article.is_published.present?  %>
+      <% is_invalid_is_published = !!errors_h[:is_published]  %>
+      <%= form.label "is_published-input", 'Is published ?', class: "form-check-label mb-0 fw-600" %>
+      <small id="hint_id_is_published" class="form-text text-muted d-block my-0">
+        If checked, article will appear as public : on website, blog, RSS feed, sitemap. If not checked, the article will be only accessible via URL once created.
+      </small>
+      <%= form.check_box 'is_published', 
+            value: @article.is_published, 
+            id: "is_published-input", 
+            class: "form-check-input #{"is-invalid" if is_invalid_is_published} #{"is-valid" if is_valid_is_published}", aria: ({ invalid: is_invalid_is_published, describedby: "is_published_message" } if triggered_validation ) %> 
+      <%= content_tag(:span, errors_h[:is_published][0], class: "invalid-feedback", id: "is_published_message") if is_invalid_is_published %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "is_published_message") if is_valid_is_published  %>
+    </div>
+ 
+    <div class="form-group mb-1">
+      <%= form.label "tags-input", 'Tags', class: "mb-0 fw-600" %>
+      <small id="hint_id_articles" class="form-text text-muted d-block my-0">
+        Optional : list tags for this article.
+      </small>
+      <%= form.select :tag_ids, Tag.all.collect {|e| [ e.shortname, e.id ] }, {}, {:multiple => true, :class => "tom-select-it form-control", :style => "width:450px;" } %>
+    </div>
+
+
+  </div>
+
+  <div class="justify-content-between">
+    <div class="my-4">
+      <%= form.submit class: 'btn btn-primary btn btn-dark btn-sm px-2 me-2' %>
+      <%= link_to 'Back', admin_articles_path, class: "btn bg-white btn-sm px-2" %>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :custom_stylesheet do %>
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.1.2/toastui-editor.min.css">
+<% end %>
+<% content_for :custom_javascript do %>
+  <script src="https://uicdn.toast.com/editor/3.1.2/toastui-editor-all.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      const Editor = toastui.Editor;
+      let initValue = "<%= escape_javascript @article.kontent.try(:html_safe) %>"
+      initValue = initValue.replace(/\\k/g,'\n');
+      window.kontent_editor = new Editor({
+        el: document.querySelector('#editorSection'),
+        initialEditType: 'markdown',
+        initialValue: initValue,
+        previewStyle: 'vertical',
+        height: '300px'
+      });
+      kontent_editor.on('change', () => {
+        document.getElementById('kontent-input').setAttribute('value', kontent_editor.getMarkdown().replace(/(?:\r\n|\r|\n)/g, '\\k'));
+      })
+    });
+  </script>
+<% end %>
+
+<% content_for :custom_stylesheet do %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0/css/tom-select.bootstrap5.min.css" integrity="sha512-UJy/ItiveaheFLF2h77Suzq5Y31Pd51KxYMhyJqManLy2PxqA9ZdbszEPdUk3g/IQeQ/hzrtMIaM/PppFnuDEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<% end %>
+<% content_for :custom_javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0/js/tom-select.complete.min.js" integrity="sha512-tOLFqPdA0O93P0d+3NeGC2GeMAa0JpxON85laCKKTM+DN9XnBYAWPwaxGvrpsF35q9mWkZoGcji6MqYPPdMMsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var config = {
+        allowEmptyOption: true,
+        maxItems: null, // The max number of items the user can select. 1 makes the control mono-selection, null allows an unlimited number of items.
+        items: [
+        <% @article.tags.each do |tag| %>
+          <%= tag.id %>,
+        <% end %>
+        ]
+      };
+      new TomSelect('.tom-select-it', config);
+    })
+  </script> 
+<% end %>

@@ -1,0 +1,60 @@
+// Override any Bootstrap props linked to the public website (landing page, faq, etc)
+.site {
+  .navbar-light .navbar-nav .nav-link {
+    color: #525252;
+
+    &:hover {
+      color: $black;
+    }
+  }
+  h1 {
+    font-weight: 800;
+    margin-bottom: 5rem;
+  }
+  h2 {
+    margin-top: 5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+  }
+  h3 {
+    margin-top: 4rem;
+  }
+  h4 {
+    margin-top: 3rem;
+  }
+  hr {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    color: $gray-500;
+  }
+  pre {
+    display: flex;
+    code {
+      width: 100%;
+      border-radius: 1rem;
+    }
+  }
+
+  blockquote {
+    -webkit-text-size-adjust: 100%;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    border-width: 1px;
+    --tw-border-opacity: 1;
+    border-color: rgb(191 219 254/var(--tw-border-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(239 246 255/var(--tw-bg-opacity));
+    padding: 0.75rem 1.25rem;
+    line-height: 1.25rem;
+    --tw-text-opacity: 1;
+    color: rgb(30 64 175/var(--tw-text-opacity));
+    p {
+      margin-bottom: 0;
+    }
+    p + p {
+      margin-top: 1rem;
+    }
+  } 
+
+}

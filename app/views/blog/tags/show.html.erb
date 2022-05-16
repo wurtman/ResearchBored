@@ -1,0 +1,22 @@
+<div class="page container pt-5 mt-4 ps-5" style="max-width: 990px">
+  <div class="text-center">
+    <h1><%= @tag[:display_name] %></h1>
+    <p class="lead"><%= @tag[:description] %></p>
+  </div>
+
+  <% @articles.each do |article| %>
+    <div class="blog-card card mt-5 p-3">
+      <div class="card-body">
+        <h2 class="h5 m-0"><%= article[:title] %></h2>   
+        <p class="card-text gray-500 my-4 fs-small"><%= article[:description].truncate(200) %></p>
+        <div class="d-flex">
+          <div class="fs-small gray-500 fw-600 me-auto">
+            <%= link_to "#{article[:publication_date].strftime("%d of %B, %Y")}", blog_path(article[:slug]), class: 'stretched-link gray-500' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-5 justify-content-start align-items-start mb-lg-2">
+      <h3 class="mb-2 mb-lg-0 fw-bold">
+        Show Tag
+      </h3>
+    </div>
+    <div class="col-12 col-lg-auto flex-1 ms-auto justify-content-center align-items-end mb-lg-2">
+      <%= render 'actions', being: 'show', tag: @tag %>
+    </div>
+  </div>
+  <div class="card p-3 p-lg-4 flex-column justify-content-center align-items-between mb-2">
+    <div class="container-fluid">
+      <dl class="mb-4">
+        <dt class="">Id</dt>
+        <dd class="fs-small text-muted m-0">Technical ID in the database</dd>
+        <dd class=""><%= @tag.id %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Shortname</dt>
+        <dd class="fs-small text-muted m-0">Business ID : helps your teammates to identify this tag</dd>
+        <dd class=""><%= @tag.shortname.present? ? @tag.shortname : '<not set>' %></dd>
+      </dl>
+
+      <dl class="mb-4">
+        <dt class="">Display name</dt>
+        <dd class="fs-small text-muted m-0">How user will see this tag</dd>
+        <dd class=""><%= @tag.display_name.present? ? @tag.display_name : '<not set>' %></dd>
+      </dl>
+
+      <dl class="mb-4">
+        <dt class="">Description</dt>
+        <dd class="fs-small text-muted m-0">Description of your tag</dd>
+        <dd class=""><%= @tag.description.present? ? @tag.description.to_s[0, 240] : '<not set>' %></dd>
+      </dl>
+
+      <dl class="mb-4">
+        <dt class="">Articles</dt>
+        <dd class="fs-small text-muted m-0">Articles marked with this tag.</dd>
+        <dd class=""><%= @tag.articles.present? ? @tag.articles.map(&:slug).join(', ') : '<not set>' %></dd>
+      </dl>
+
+      <%= link_to 'Edit', edit_admin_tag_path(@tag), class: "btn btn-primary btn btn-dark btn-sm px-3" %>
+      <%= link_to 'Back', admin_tags_path, class: "btn bg-white btn-sm px-3" %>
+    </div>
+  </div>
+</div>
+

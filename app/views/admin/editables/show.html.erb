@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-5 justify-content-start align-items-start mb-lg-2">
+      <h1 class="mb-2 mb-lg-0 fw-bold truncate h3">
+        Show Editable
+      </h1>
+    </div>
+    <div class="col-12 col-lg-auto flex-1 ms-auto justify-content-center align-items-end mb-lg-2">
+      <%= render 'actions', being: 'show', editable: @editable %>
+    </div>
+  </div>
+  <div class="card p-3 p-lg-4 flex-column justify-content-center align-items-between mb-2">
+    <div class="container-fluid">
+      <dl class="mb-4">
+        <dt class="">Id</dt>
+        <dd class="fs-small text-muted m-0">Technical ID in the database</dd>
+        <dd class=""><%= @editable.id %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Shortname</dt>
+        <dd class="fs-small text-muted m-0">Business ID : helps your teammates to identify this editable</dd>
+        <dd class=""><%= @editable.shortname.present? ? @editable.shortname : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Content</dt>
+        <dd class="fs-small text-muted m-0">Actual content of your editable</dd>
+        <dd class="actual-content"><%= @editable.kontent.present? ? truncate(@editable.kontent, length: 240) : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Description</dt>
+        <dd class="fs-small text-muted m-0">Description of the editable, as it will appear in SEO results</dd>
+        <dd class=""><%= @editable.description.present? ? @editable.description.to_s[0, 240] : '<not set>' %></dd>
+      </dl>
+      <%= link_to 'Edit', edit_admin_editable_path(@editable), class: "btn btn-primary btn btn-dark btn-sm px-3" %>
+      <%= link_to 'Back', admin_editables_path, class: "btn bg-white btn-sm px-3" %>
+    </div>
+  </div>
+</div>
+

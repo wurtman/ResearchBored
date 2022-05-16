@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <%# Title and description %>
+    <title><%= meta_title %></title>
+    <meta name="description" content="<%= meta_description %>">
+  
+    <%# Facebook Open Graph Data %>
+    <meta property="og:title" content="<%= meta_title %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= meta_image %>">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:site_name" content="<%= meta_title %>">
+
+    <%# Twitter Card Data %>
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="<%= DEFAULT_META["twitter_account"] %>">
+    <meta property="twitter:title" content="<%= meta_title %>">
+    <meta property="twitter:description" content="<%= meta_description %>">
+    <meta property="twitter:creator" content="<%= DEFAULT_META["twitter_account"] %>">
+    <meta property="twitter:image:src" content="<%= meta_image %>">
+
+    <%# RSS Feed %>
+    <link href="<%= feed_path %>" rel="alternante" type="application/rss+xml" title="RSS feed">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%# Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails %>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'application' %>
+    <%= vite_stylesheet_tag 'theme.scss' %>
+    <%= yield :custom_stylesheet %>
+
+    <%# favicon, by using data:image you save an extra HTTP request on each page load  %>
+    <link rel="icon" type="image/svg" sizes="16x16" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzZweCIgaGVpZ2h0PSIzNnB4IiB2aWV3Qm94PSIwIDAgMzYgMzYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDUwLjIgKDU1MDQ3KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5TaGFwZTwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJhcHAiIGZpbGw9IiMyQzJCMkEiPgogICAgICAgICAgICA8cGF0aCBkPSJNMTgsMCBDMy40ODI2OCwwIDAsMy40ODI3IDAsMTggQzAsMzIuNTE3MzEgMy40ODI2OCwzNiAxOCwzNiBDMzIuNTE3MywzNiAzNiwzMi41MTczMSAzNiwxOCBDMzYsMy40ODI3IDMyLjUxNzMsMCAxOCwwIFogTTEyLjkwNDMsMjUuOTU1MjYgTDcuMjU4NjUsMTMuMTI0MyBDNy4wMDIwMywxMi41MDEgNi43ODIwNywxMS42OTQ2IDYuNzgyMDcsMTAuOTk4IEM2Ljc4MjA3LDcuODA4NiA5LjAxODMzLDUuNTcyMyAxMi4yMDc3LDUuNTcyMyBDMTMuMjUyOSw1LjU3MjMgMTQuMTIwOCw1Ljg0NjkgMTUuMDAzMyw2LjEyNjEgTDE1LjAwNCw2LjEyNjQgQzE1LjkxNjUsNi40MTUyIDE2Ljg0NDYsNi43MDg4IDE4LDYuNzA4OCBDMTkuMTY4OSw2LjcwODggMjAuMDc0OCw2LjQxNzggMjAuOTY5Nyw2LjEzMDIgTDIwLjk3LDYuMTMwMSBDMjEuODQzMiw1Ljg0OTUgMjIuNzA2LDUuNTcyMyAyMy43OTIyLDUuNTcyMyBDMjYuOTgxNiw1LjU3MjMgMjkuMjE3OSw3LjgwODYgMjkuMjE3OSwxMC45OTggQzI5LjIxNzksMTEuNjk0NiAyOC45OTc5LDEyLjUwMSAyOC43NDE0LDEzLjEyNDMgTDIzLjA5NTgsMjUuOTU1MjYgQzIyLjE0MjUsMjguMTE4MTkgMjAuMzA5NiwyOS4yOTEzIDE4LDI5LjI5MTMgQzE1LjY5MDQsMjkuMjkxMyAxMy44NTc0LDI4LjExODE5IDEyLjkwNDMsMjUuOTU1MjYgWiBNMTIuNDI3NywxMS4xNDQ3IEwxOCwyMy43NTU3IEwyMy40OTksMTEuMTQ0NyBDMjEuOTIyNiwxMS45MTQ2IDE5Ljk0MywxMi4yODEyIDE4LDEyLjI4MTIgQzE1Ljk4MzcsMTIuMjgxMiAxNC4wNzc0LDExLjkxNDYgMTIuNDI3NywxMS4xNDQ3IFoiIGlkPSJTaGFwZSI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+" />
+
+  </head>
+
+  <body class="site">
+
+    <%# "toast" notification for flash messages  %>
+    <%= render 'shared/toast', flash: flash %>
+    
+    <%# main navigation bar, fixed to the top  %>
+    <%= render 'shared/main_nav' %>
+
+    <main>
+
+      <%# main content for our public website will display here  %>
+      <%= yield %>
+
+    </main>
+
+    <%# shared footer  %>
+    <%= render 'shared/footer' %>
+
+    <%= yield :custom_javascript %>
+  </body>
+</html>

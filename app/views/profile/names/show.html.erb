@@ -1,0 +1,30 @@
+<% triggered_validation = !!local_assigns[:triggered_validation] || !!params[:triggered_validation] %>
+
+<div class="container py-3 px-4">
+  <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+    <h1 class="mt-4 mb-2 mb-lg-0 fw-bold h4">Account</h1>
+  </div>
+  <div class="mb-4 p-4 card">
+      <%= form_with scope: :profile, url: profile_name_path, method: :put, data: { turbo: false } do |form| %>
+        <%= form.label "name-input", 'Display name', class: "h6 mb-3" %>
+        <p class="fs-small mb-0 text-muted">Any name, to identify you through the application.</p>
+        <%= form.text_field 'name', value: @profile.name, id: "name-input", required: true, class: "form-control #{"is-invalid" if @profile.errors.to_hash[:name]} #{"is-valid" if (triggered_validation && @profile.errors.to_hash[:name].blank?)}", aria: ({ invalid: @profile.errors.to_hash[:name].present?, describedby: "name_message" } if (triggered_validation && @profile.errors.to_hash[:name].blank?) || @profile.errors.to_hash[:name].present? ) %> 
+        <%= content_tag(:span, @profile.errors.to_hash[:name][0], class: "invalid-feedback", id: "name_message") if @profile.errors.to_hash[:name].present? %>
+        <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "name_message") if (triggered_validation && @profile.errors.to_hash[:name].blank?)  %>
+
+        <div class="form-group mb-2">
+          <%= form.submit 'Save', class: "btn btn-dark btn-sm mt-3" %>
+        </div>
+      <% end %>
+  </div>
+  <div class="p-4 card">
+    <label class="h6 mb-3">Your current data</label>
+    <p class="fs-small text-muted mb-1"><%= current_account.profile.name %></p>
+    <p class="fs-small text-muted mb-1"><%= current_account.email %></p>
+    <p class="fs-small text-muted mb-4">Joined on <span><%= current_account.profile.created_at.strftime("%d, %B, %Y at %-I:%M %p") %></span></p>
+    <div class="mb-2 d-flex flex-row">
+      <%= link_to 'Change email', rodauth.change_login_path, class: "btn bg-white btn-sm me-2 change-email-link" %>
+      <%= link_to 'Change password', rodauth.change_password_path, class: "btn bg-white btn-sm change-password-link" %>
+    </div>
+  </div>
+</div>

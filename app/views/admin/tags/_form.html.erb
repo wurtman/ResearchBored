@@ -1,0 +1,90 @@
+<% triggered_validation = !!local_assigns[:triggered_validation] || !!params[:triggered_validation] %>
+<% errors_h = @tag.errors.to_hash %>
+
+<%= form_with(model: [:admin, tag]) do |form| %>
+
+    <div class="form-group mb-1">
+      <% is_valid_shortname = triggered_validation && errors_h[:shortname].blank? && @tag.shortname.present?  %>
+      <% is_invalid_shortname = !!errors_h[:shortname]  %>
+      <%= form.label "shortname-input", 'Shortname *', class: "mb-0 fw-600" %>
+      <small id="hint_id_shortname" class="form-text text-muted d-block my-0">
+        Required - a private, short, unique, alphanumeric name that will help to recognize this tag through the application.
+      </small>
+      <%= form.text_field 'shortname', 
+            value: @tag.shortname, 
+            id: "shortname-input", 
+            class: "form-control #{"is-invalid" if is_invalid_shortname} #{"is-valid" if is_valid_shortname}", aria: ({ invalid: is_invalid_shortname, describedby: "shortname_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:shortname][0], class: "invalid-feedback", id: "shortname_message") if errors_h[:shortname].present? %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "shortname_message") if (is_valid_shortname)  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_display_name = triggered_validation && errors_h[:display_name].blank? && @tag.display_name.present?  %>
+      <% is_invalid_display_name = !!errors_h[:display_name]  %>
+      <%= form.label "display_name-input", 'Display name', class: "mb-0 fw-600" %>
+      <small id="hint_id_display_name" class="form-text text-muted d-block my-0">
+        Required : how user will see this tag
+      </small>
+      <%= form.text_field 'display_name', 
+            value: @tag.display_name, 
+            id: "display_name-input", 
+            class: "form-control #{"is-invalid" if errors_h[:display_name]} #{"is-valid" if is_valid_display_name}", aria: ({ invalid: is_invalid_display_name, describedby: "display_name_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:display_name][0], class: "invalid-feedback", id: "display_name_message") if is_invalid_display_name %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "display_name_message") if is_valid_display_name  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_description = triggered_validation && errors_h[:description].blank? && @tag.description.present?  %>
+      <% is_invalid_description = !!errors_h[:description]  %>
+      <%= form.label "description-input", 'Description', class: "mb-0 fw-600" %>
+      <small id="hint_id_description" class="form-text text-muted d-block my-0">
+        Optional, but recommended : the description will help others to understand what is this tag about.
+      </small>
+      <%= form.text_field 'description', 
+            value: @tag.description, 
+            id: "description-input", 
+            class: "form-control #{"is-invalid" if errors_h[:description]} #{"is-valid" if is_valid_description}", aria: ({ invalid: is_invalid_description, describedby: "description_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:description][0], class: "invalid-feedback", id: "description_message") if is_invalid_description %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "description_message") if is_valid_description  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <%= form.label "articles-input", 'Articles', class: "mb-0 fw-600" %>
+      <small id="hint_id_articles" class="form-text text-muted d-block my-0">
+        Optional : list articles with this tag.
+      </small>
+      <%= form.select :article_ids, Article.all.collect {|e| [ e.slug, e.id ] }, {}, {:multiple => true, :class => "tom-select-it form-control", :style => "width:450px;" } %>
+    </div>
+
+  </div>
+
+  <div class="justify-content-between">
+    <div class="my-4">
+      <%= form.submit class: 'btn btn-primary btn btn-dark btn-sm px-2 me-2' %>
+      <%= link_to 'Back', admin_tags_path, class: "btn bg-white btn-sm px-2" %>
+    </div>
+  </div>
+
+<% end %>
+
+<% content_for :custom_stylesheet do %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0/css/tom-select.bootstrap5.min.css" integrity="sha512-UJy/ItiveaheFLF2h77Suzq5Y31Pd51KxYMhyJqManLy2PxqA9ZdbszEPdUk3g/IQeQ/hzrtMIaM/PppFnuDEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<% end %>
+<% content_for :custom_javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0/js/tom-select.complete.min.js" integrity="sha512-tOLFqPdA0O93P0d+3NeGC2GeMAa0JpxON85laCKKTM+DN9XnBYAWPwaxGvrpsF35q9mWkZoGcji6MqYPPdMMsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var config = {
+        allowEmptyOption: true,
+        maxItems: null, // The max number of items the user can select. 1 makes the control mono-selection, null allows an unlimited number of items.
+        items: [
+        <% @tag.articles.each do |article| %>
+          <%= article.id %>,
+        <% end %>
+        ]
+      };
+      new TomSelect('.tom-select-it', config);
+    })
+  </script> 
+<% end %>
+

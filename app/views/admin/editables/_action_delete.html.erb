@@ -1,0 +1,5 @@
+<div>
+  <%= form_with url: admin_editable_path(editable.id), method: :delete, data: { turbo: false } do |form| %>
+    <%= form.submit 'Delete', class: "admin-delete-item admin-destroy-item-white d-flex justify-content-center align-items-center btn btn-danger btn-sm shadow-none text-white ps-4" %>
+  <% end %>
+</div>

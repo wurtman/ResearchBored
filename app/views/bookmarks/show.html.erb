@@ -1,0 +1,17 @@
+<div class="flex-center">
+  <h1 class="mt-4 mb-2 mb-lg-0 fw-bold h4"><%= @bookmark.title%></h1>
+</div>
+
+<div class="flex-center">
+  <div class="col-12 col-md-8 col-lg-5 p-4 p-md-5 card">  
+    <p style="color: green"><%= notice %></p>
+
+    <br><%= render @bookmark %> </br>
+
+    <div class="d-flex justify-content-evenly">
+      <%= link_to "Edit bookmark", edit_bookmark_path(@bookmark), class: "btn btn-dark"%>
+      <%= link_to "Return to bookmarks", profile_bookmark_path, class: "btn btn-dark"%>
+      <%= button_to "Destroy this bookmark", @bookmark, method: :delete,  class: "btn btn-dark"%>
+    </div>
+  </div>
+</div>

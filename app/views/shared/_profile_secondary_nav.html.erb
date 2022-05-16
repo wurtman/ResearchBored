@@ -1,0 +1,17 @@
+<nav class="secondarynav bg-light mt-3 flex-center border-bottom" style="min-height: 48px">
+    <div class="container py-1">
+        <div class="d-flex flex-row flex-wrap">
+            <% if allowed_to?(:show?, :customer) %>
+                <%= link_to 'Bookmarks', profile_bookmark_path, class: "btn btn-secondarynav shadow-none #{current_page?(controller: 'bookmarks', action: 'show') ? 'active' : ''}" %>
+            <% end %>
+            <a class="btn btn-secondarynav shadow-none <%= current_page?(controller: 'names', action: 'show') ? 'active' : '' %>" href="/profile">Account</a>
+            <% if allowed_to?(:show?, :customer) %>
+                <%= link_to 'Preferences', profile_preference_path, class: "btn btn-secondarynav shadow-none #{current_page?(controller: 'preferences', action: 'show') ? 'active' : ''}" %>
+            <% end %>
+            <% if allowed_to?(:show?, :customer) %>
+                <%= link_to 'Billing', profile_billing_path, class: "btn btn-secondarynav shadow-none #{current_page?(controller: 'billings', action: 'show') ? 'active' : ''}" %>
+            <% end %>
+            <%= link_to 'Exit', profile_danger_path, class: "btn btn-secondarynav shadow-none #{current_page?(controller: 'dangers', action: 'show') ? 'active' : ''}" %>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,31 @@
+.profile {
+  .btn-secondarynav {
+      border: none;
+      position: relative;
+      display: inline-block;
+      color: $gray-600;
+      &:hover {
+        color: $gray-600;
+        background-color: #e9e9e9;
+      }
+  }
+  .btn-secondarynav.active {
+      color: $black;
+      &:hover {
+        color: $black;
+      }
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        height: 0;
+        left: 8px;
+        right: 8px;
+        bottom: -6px;
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        border-bottom-color: #000;
+      }
+  }
+
+}

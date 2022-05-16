@@ -1,0 +1,34 @@
+<% content_for :custom_javascript do %>
+
+  <script type="text/javascript">
+
+    window.addEventListener("DOMContentLoaded", (event) => {
+      let noticeMessage = "<%= flash['notice'] %>"
+      let alertMessage = "<%= flash['alert'] %>"
+      let primaryMessage = "<%= flash['primary'] %>"
+      let secondaryMessage = "<%= flash['secondary'] %>"
+      let successMessage = "<%= flash['success'] %>"
+      let dangerMessage = "<%= flash['danger'] %>"
+      let warningMessage = "<%= flash['warning'] %>"
+      let infoMessage = "<%= flash['info'] %>"
+      let lightMessage = "<%= flash['light'] %>"
+      let darkMessage = "<%= flash['dark'] %>"
+
+      const bs5Utils = new Bs5Utils();
+
+      noticeMessage && bs5Utils.Snack.show('success', noticeMessage, 8000, dismissible = true);
+      alertMessage && bs5Utils.Snack.show('danger', alertMessage, 8000, dismissible = true);
+      primaryMessage && bs5Utils.Snack.show('primary', primaryMessage, 8000, dismissible = true);
+      secondaryMessage && bs5Utils.Snack.show('secondary', secondaryMessage, 8000, dismissible = true);
+      successMessage && bs5Utils.Snack.show('success', successMessage, 8000, dismissible = true);
+      dangerMessage && bs5Utils.Snack.show('danger', dangerMessage, 8000, dismissible = true);
+      warningMessage && bs5Utils.Snack.show('warning', warningMessage, 8000, dismissible = true);
+      infoMessage && bs5Utils.Snack.show('info', infoMessage, 8000, dismissible = true);
+      lightMessage && bs5Utils.Snack.show('light', lightMessage, 8000, dismissible = true);
+      darkMessage && bs5Utils.Snack.show('dark', darkMessage, 8000, dismissible = true);
+    });
+
+  </script>
+  
+<% end %>
+

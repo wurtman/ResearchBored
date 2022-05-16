@@ -1,0 +1,14 @@
+<div class="container py-3 px-4">
+  <div class="mb-4 p-4 card">
+    <div class="flex-center">
+      <h1>New bookmark</h1>
+    </div>
+    <%= render "form", bookmark: @bookmark %>
+
+    <br>
+
+    <div>
+      <%= link_to "<- Back to bookmarks", profile_bookmark_path, class:"btn btn-dark btn-sm" %>
+    </div>
+  </div>
+</div>

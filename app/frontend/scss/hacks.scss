@@ -1,0 +1,16 @@
+// Sometimes there are no proper way to style an element.
+// This is particularly true for CSS that comes from external plugins.
+
+// Try to keep this file as tiny as possible :)
+
+.toast-container.position-fixed .border-1 {
+  border: none !important;
+}
+
+.toast-container {
+  padding-top: .8rem;
+}
+
+html .toastui-editor-defaultUI-toolbar {
+  padding: 0;
+}

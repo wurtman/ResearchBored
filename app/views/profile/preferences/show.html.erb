@@ -1,0 +1,24 @@
+<div class="container py-3 px-4">
+  <div class="d-flex flex-row justify-content-between align-items-center mb-4">
+    <h1 class="mt-4 mb-2 mb-lg-0 fw-bold h4">Preferences</h1>
+  </div>
+  <div class="mb-4 p-4 card">
+    <%= form_with scope: :choices, url: profile_preference_path, method: :put, data: { turbo: false } do |form| %>
+      <%= form.label "marketing-input", 'Marketing communication', class: "h6 mb-3" %>
+      <%= form.collection_check_boxes :marketing_preferences, Profile.marketing_preferences, :first, :last, :input_html => { :class => 'form-control checkbox' } do |custom_check_box| %>
+        <div>
+          <%= custom_check_box.check_box({class: 'checkboxinput form-check-input me-2 mb-2 cursor-pointer', checked: custom_check_box.value.to_s.in?(@profile.preferences['marketing_preferences']) }) %>
+          <%= custom_check_box.label({class:'fs-small text-muted cursor-pointer'}) %>
+        </div>
+      <% end %>
+      <%= form.label "report-input", 'Email frequency', class: "h6 mb-3 mt-4" %>
+      <div>
+        <p class="fs-small mb-0 text-muted">How often should we send you an email report ?</p>
+        <%= form.select :report_preference, Profile.report_preferences.invert, {selected: @profile.preferences['report_preference']}, {class: 'form-control form-select cursor-pointer'} %>
+      </div>
+      <div class="form-group mb-2">
+        <%= form.submit 'Save', class: "btn btn-dark btn-sm mt-3", name: 'asked_marketing'  %>
+      </div>
+    <% end %>
+  </div>
+</div>

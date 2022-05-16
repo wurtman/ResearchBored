@@ -1,0 +1,87 @@
+<% triggered_validation = !!local_assigns[:triggered_validation] || !!params[:triggered_validation] %>
+<% errors_h = @editable.errors.to_hash %>
+
+<%= form_with(model: [:admin, editable]) do |form| %>
+
+    <div class="form-group mb-1">
+      <% is_valid_shortname = triggered_validation && errors_h[:shortname].blank? && @editable.shortname.present?  %>
+      <% is_invalid_shortname = !!errors_h[:shortname]  %>
+      <%= form.label "shortname-input", 'Shortname *', class: "mb-0 fw-600" %>
+      <small id="hint_id_shortname" class="form-text text-muted d-block my-0">
+        Required - a private, short, unique, alphanumeric name that will help to recognize this editable through the application.
+      </small>
+      <%= form.text_field 'shortname', 
+            value: @editable.shortname, 
+            id: "shortname-input", 
+            class: "form-control #{"is-invalid" if is_invalid_shortname} #{"is-valid" if is_valid_shortname}", aria: ({ invalid: is_invalid_shortname, describedby: "shortname_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:shortname][0], class: "invalid-feedback", id: "shortname_message") if errors_h[:shortname].present? %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "shortname_message") if (is_valid_shortname)  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_kontent = triggered_validation && errors_h[:kontent].blank? && @editable.kontent.present?  %>
+      <% is_invalid_kontent = !!errors_h[:kontent]  %>
+      <%= form.label "kontent-input", 'Content', class: "mb-0 fw-600" %>
+      <small id="hint_id_kontent" class="form-text text-muted d-block my-0">
+        Optional, but recommended. Actual content of your editable. Markdown, HTML, or plain text are accepted.
+      </small>
+      <div id="editorSection"></div>
+      <%= form.text_field 'kontent', 
+            value: @editable.kontent, 
+            id: "kontent-input", 
+            style: "height: 0",
+            class: "invisible mb-0 form-control #{"is-invalid" if is_invalid_kontent} #{"is-valid" if is_valid_kontent}", aria: ({ invalid: is_invalid_kontent, describedby: "kontent_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:kontent][0], class: "invalid-feedback", id: "kontent_message", style: "margin-top:-.8rem") if is_invalid_kontent %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "kontent_message", style: "margin-top:-.8rem") if is_valid_kontent  %>
+    </div>
+
+    <div class="form-group mb-1">
+      <% is_valid_description = triggered_validation && errors_h[:description].blank? && @editable.description.present?  %>
+      <% is_invalid_description = !!errors_h[:description]  %>
+      <%= form.label "description-input", 'Description', class: "mb-0 fw-600" %>
+      <small id="hint_id_description" class="form-text text-muted d-block my-0">
+        Optional, but recommended : this will be shown in SEO result under the title
+      </small>
+      <%= form.text_field 'description', 
+            value: @editable.description, 
+            id: "description-input", 
+            class: "form-control #{"is-invalid" if errors_h[:description]} #{"is-valid" if is_valid_description}", aria: ({ invalid: is_invalid_description, describedby: "description_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:description][0], class: "invalid-feedback", id: "description_message") if is_invalid_description %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "description_message") if is_valid_description  %>
+    </div>
+
+  </div>
+
+  <div class="justify-content-between">
+    <div class="my-4">
+      <%= form.submit class: 'btn btn-primary btn btn-dark btn-sm px-2 me-2' %>
+      <%= link_to 'Back', admin_editables_path, class: "btn bg-white btn-sm px-2" %>
+    </div>
+  </div>
+
+<% end %>
+
+<% content_for :custom_stylesheet do %>
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/3.1.2/toastui-editor.min.css">
+<% end %>
+<% content_for :custom_javascript do %>
+  <script src="https://uicdn.toast.com/editor/3.1.2/toastui-editor-all.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      const Editor = toastui.Editor;
+      let initValue = "<%= escape_javascript @editable.kontent.try(:html_safe) %>"
+      initValue = initValue.replace(/\\k/g,'\n')
+      window.kontent_editor = new Editor({
+        el: document.querySelector('#editorSection'),
+        initialEditType: 'markdown',
+        initialValue: initValue,
+        previewStyle: 'vertical',
+        height: '300px'
+      });
+      kontent_editor.on('change', () => {
+        document.getElementById('kontent-input').setAttribute('value', kontent_editor.getMarkdown().replace(/(?:\r\n|\r|\n)/g, '\\k'));
+      })
+    });
+  </script>
+<% end %>
+

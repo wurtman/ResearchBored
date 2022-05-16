@@ -1,0 +1,33 @@
+<div class="page blog-article container pt-5 mt-4 ps-5" style="max-width: 990px">
+  <h1 class="blog-title mb-2">
+    <%= @article[:title].html_safe %>
+  </h1>
+  <div class="mb-5">
+    <small class="text-muted">Published <%= @article[:publication_date] %></small>
+    <div>
+      <% @article[:tags].each_with_index do |tag, indx| %>
+        <small class="landing-badge me-1">
+          <%= link_to "##{tag[:display_name]}", blog_tag_path(tag[:shortname]) %> 
+        </small>
+      <% end %>
+    </div>
+  </div>
+  <div class="blog-body">
+    <%= @article[:parsed_content].html_safe %>
+  </div>
+</div>
+
+
+<% content_for :custom_stylesheet do %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/default.min.css">
+<% end %>
+<% content_for :custom_javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      document.querySelectorAll('pre code').forEach((el) => {
+        hljs.highlightElement(el);
+      });
+    });
+  </script>
+<% end %>

@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row mb-3">
+    <div class="col-12 col-lg-5 justify-content-start align-items-start mb-lg-2">
+      <h1 class="mb-2 mb-lg-0 fw-bold truncate h3">
+        Show Article
+      </h1>
+    </div>
+    <div class="col-12 col-lg-auto flex-1 ms-auto justify-content-center align-items-end mb-lg-2">
+      <%= render 'actions', being: 'show', article: @article %>
+    </div>
+  </div>
+  <div class="card p-3 p-lg-4 flex-column justify-content-center align-items-between mb-2">
+    <div class="container-fluid">
+      <dl class="mb-4">
+        <dt class="">Id</dt>
+        <dd class="fs-small text-muted m-0">Technical ID in the database</dd>
+        <dd class=""><%= @article.id %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Slug</dt>
+        <dd class="fs-small text-muted m-0">String ID, url-compatible</dd>
+        <dd class=""><%= @article.slug.present? ? @article.slug : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Content</dt>
+        <dd class="fs-small text-muted m-0">Actual content of your article</dd>
+        <dd class=""><%= @article.kontent.present? ? @article.kontent.to_s[0, 240] : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Title</dt>
+        <dd class="fs-small text-muted m-0">Title of your article, as it will appear in SEO results and tab title</dd>
+        <dd class=""><%= @article.title.present? ? @article.title.to_s[0, 240] : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Description</dt>
+        <dd class="fs-small text-muted m-0">Description of the article, as it will appear in SEO results</dd>
+        <dd class=""><%= @article.description.present? ? @article.description.to_s[0, 240] : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Image URL</dt>
+        <dd class="fs-small text-muted m-0">URL of the image of the article, as it will appear when you share it on social medias.</dd>
+        <dd class=""><%= @article.image_url.present? ? @article.image_url : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Publication date</dt>
+        <dd class="fs-small text-muted m-0">Will appear as the creation date of the article.</dd>
+        <dd class=""><%= @article.publication_date.present? ? @article.publication_date.strftime("%A %d %b %Y %H:%M:%S") : '<not set>' %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Creation date</dt>
+        <dd class="fs-small text-muted m-0">Creation date in the database.</dd>
+        <dd class=""><%= @article.created_at.strftime("%A %d %b %Y %H:%M:%S") %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Updated at</dt>
+        <dd class="fs-small text-muted m-0">Last time it was update in the database.</dd>
+        <dd class=""><%= @article.updated_at.strftime("%A %d %b %Y %H:%M:%S") %></dd>
+      </dl>
+      <dl class="mb-4">
+        <dt class="">Tags</dt>
+        <dd class="fs-small text-muted m-0">Tags for this article.</dd>
+        <dd class=""><%= @article.tags.present? ? @article.tags.map(&:shortname).join(', ') : '<not set>' %></dd>
+      </dl>
+
+      <%= link_to 'Edit', edit_admin_article_path(@article), class: "btn btn-primary btn btn-dark btn-sm px-3" %>
+      <%= link_to 'Back', admin_articles_path, class: "btn bg-white btn-sm px-3" %>
+    </div>
+  </div>
+</div>
+

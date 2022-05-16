@@ -1,0 +1,47 @@
+<div class="container py-3 px-4">
+  <div class="d-flex flex-row justify-content-center align-items-center mb-4">
+    <h1 class="mt-4 mb-2 mb-lg-0 fw-bold h4">Search Results</h1>
+  </div>
+
+  <div class="mb-4 p-4 card">
+    <div>
+      <form class="d-flex justify-content-end" action="/search">
+        <input class="form-control-sm" name="q" type="search" placeholder="Search" aria-label="Search"></input>
+        <button type="submit" class="btn btn-dark">Search</button>
+      </form>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Last Updated</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @bookmarks.each do |bookmark| %>
+          <% if bookmark.account == current_account %>
+            <tr>
+              
+              <td><%= bookmark.title %></td>
+              <td><%= bookmark.created_at %></td>
+              <td><%= bookmark.updated_at %></td>
+      
+              <td><%= link_to "Show", bookmark, class:"btn btn-outline-info" %></td>
+              <td><%= button_to "Delete", bookmark, method: :delete, class: "btn btn-outline-danger" %></td>
+              
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <table class="table">
+      <%= link_to "New bookmark", new_profile_bookmark_path, class: "btn btn-dark"%>
+    </table>
+
+  </div>
+
+</div>

@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="alert alert-info d-flex flex-row justify-content-start align-items-center" style="border-radius: 0.4rem;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle me-3 d-none d-sm-block" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+    </svg>
+    <p class="mb-0">
+      <span class="d-block fs-small">Monitoring section is meant for the developer, where databases monitoring, background jobs tests,</span>
+      <span class="d-block fs-small">data migration, or any technical-related task, can be achieved here. </span>
+    </p>
+  </div>
+  <div class="row mb-2 mt-4">
+    <div class="col-12 col-lg-5 justify-content-start align-items-start mb-lg-2">
+      <h2 class="mb-2 mb-lg-0 fw-bold truncate h3">
+        Monitoring
+      </h2>
+    </div>
+  </div>
+  <div class="card p-4 mb-4 flex-column flex-md-row justify-content-between align-items-center">
+    <div class="d-flex flex-row justify-content-start align-items-center flex-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-briefcase-fill me-3" viewBox="0 0 16 16">
+        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z"/>
+        <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z"/>
+      </svg>
+      <div class="d-flex flex-column justify-content-center align-items-start">
+        <p class="fw-bold text-dark mb-0">Background Jobs with Sidekiq</p>
+        <p class="mb-0 text-muted fs-small">Monitor sidekiq jobs. Will open in a new window.</p>
+      </div>
+    </div>
+    <div class="mt-2 mt-md-0">
+      <%= link_to 'Monitor Jobs', sidekiq_path, class: 'btn btn-dark btn-sm monitor-jobs', style: 'width:130px' %>
+    </div>
+  </div>
+  <div class="card p-4 mb-4 flex-column flex-md-row justify-content-between align-items-center">
+    <div class="d-flex flex-row justify-content-start align-items-center flex-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-briefcase me-3" viewBox="0 0 16 16">
+        <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
+      </svg>
+      <div class="d-flex flex-column justify-content-center align-items-start">
+        <p class="fw-bold text-dark mb-0">Launch HelloWorld Background Job</p>
+        <p class="mb-0 text-muted fs-small">Launches a simple job that prints the current Time. For debugging purposes.</p>
+      </div>
+    </div>
+    <div class="mt-2 mt-md-0">
+      <%= form_with url: admin_helloworld_job_path, method: :post, data: { turbo: false } do |form| %>
+        <%= form.submit 'Launch Job', class: "btn btn-dark btn-sm launch-helloworld-job", style: "width:130px" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="card p-4 mb-4 flex-column flex-md-row justify-content-between align-items-center">
+    <div class="d-flex flex-row justify-content-start align-items-center flex-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-hdd-fill me-3" viewBox="0 0 16 16">
+        <path d="M0 10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-1zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM.91 7.204A2.993 2.993 0 0 1 2 7h12c.384 0 .752.072 1.09.204l-1.867-3.422A1.5 1.5 0 0 0 11.906 3H4.094a1.5 1.5 0 0 0-1.317.782L.91 7.204z"/>
+      </svg>
+      <div class="d-flex flex-column justify-content-center align-items-start">
+        <p class="fw-bold text-dark mb-0">Monitor SQL Database</p>
+        <p class="mb-0 text-muted fs-small">Directly query the undelying SQL database.</p>
+      </div>
+    </div>
+    <div class="mt-2 mt-md-0">
+      <%= link_to 'View SQL', rails_db_path, class: "btn btn-dark btn-sm view-sql", style: "width:130px" %>
+    </div>
+  </div>
+  <div class="card p-4 mb-4 flex-column flex-md-row justify-content-between align-items-center">
+    <div class="d-flex flex-row justify-content-start align-items-center flex-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-hdd me-3" viewBox="0 0 16 16">
+        <path d="M4.5 11a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM3 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+        <path d="M16 11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.51c0-.418.105-.83.305-1.197l2.472-4.531A1.5 1.5 0 0 1 4.094 3h7.812a1.5 1.5 0 0 1 1.317.782l2.472 4.53c.2.368.305.78.305 1.198V11zM3.655 4.26 1.592 8.043C1.724 8.014 1.86 8 2 8h12c.14 0 .276.014.408.042L12.345 4.26a.5.5 0 0 0-.439-.26H4.094a.5.5 0 0 0-.44.26zM1 10v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z"/>
+      </svg>
+      <div class="d-flex flex-column justify-content-center align-items-start">
+        <p class="fw-bold text-dark mb-0">Migrate data</p>
+        <p class="mb-0 text-muted fs-small">If you need to migrate data since previous release of your product, it's here.</p>
+      </div>
+    </div>
+    <div class="mt-2 mt-md-0">
+      <%= form_with url: admin_migrate_data_path, method: :put, data: { turbo: false } do |form| %>
+        <%= form.submit 'Migrate Data', class: "btn btn-dark btn-sm migrate-data", style: "width:130px" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="card p-4 mb-4 flex-column flex-md-row justify-content-between align-items-center">
+    <div class="d-flex flex-row justify-content-start align-items-center flex-1">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-patch-question me-3" viewBox="0 0 16 16">
+        <path d="M8.05 9.6c.336 0 .504-.24.554-.627.04-.534.198-.815.847-1.26.673-.475 1.049-1.09 1.049-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745z"/>
+        <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z"/>
+        <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+      </svg>
+      <div class="d-flex flex-column justify-content-center align-items-start">
+        <p class="fw-bold text-dark mb-0">View versions</p>
+        <p class="mb-0 text-muted fs-small">Show versions of tools used in this application</p>
+      </div>
+    </div>
+    <div class="mt-2 mt-md-0">
+      <%= link_to 'Show versions', admin_versions_path, class: "btn btn-dark btn-sm show-versions", style: "width:130px" %>
+    </div>
+  </div>
+</div>

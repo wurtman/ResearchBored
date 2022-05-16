@@ -1,0 +1,151 @@
+/** 
+* Bootstrap settings. It will overrides
+* any bootstrap variable defined in bootstrap/scss/_variables.scss
+*/
+$enable-negative-margins: true;
+$rfs-base-value: 1rem;
+
+@import "./palette";
+
+$body-color: $dark;
+$card-border-radius: 13px;
+$card-border-color: rgb(230, 236, 241);
+$box-shadow: 0 3px 20px 0 rgba(116, 129, 141, .12);
+
+$display-font-sizes: (
+  1: 5.5rem,
+  2: 4.5rem,
+  3: 4rem,
+  4: 3.5rem,
+  5: 2.5rem,
+  6: 2rem
+);
+$display-font-weight: 700;
+$headings-font-weight: 700;
+
+$secondary: #89898e;
+$success: #31bc60;
+$info: #88b3f0;
+$warning: #df7800;
+$danger: #e34f2f;
+$light: #fbfbfc;
+$dark: #1e2029;
+
+$link-decoration: none;
+$link-hover-decoration: underline;
+
+$text-muted: $gray-400;
+
+$lead-font-size: 1.4rem;
+$lead-font-weight: 400;
+$btn-font-weight: 500;
+
+$btn-hover-bg-shade-amount: 60%;
+$btn-hover-bg-tint-amount: 60%;
+$btn-border-radius: .375rem;
+
+$form-label-font-size: 0.875rem;
+$form-label-font-weight: 500;
+$form-label-color: #12141d;
+
+$transition-fade:             opacity .6s linear;
+
+$toast-border-width: 0;
+
+$input-btn-padding-y-lg:      .7rem;
+$input-btn-padding-x-lg:      1rem;
+
+
+/**
+ *  import the necessary Bootstrap files 
+ */
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+@import "node_modules/bootstrap/scss/utilities";
+/**
+ *  utility classes
+ */
+@import "./utility_api";
+@import "./utility_custom";
+/**
+ *  semantic classes (fewer is better)
+ */
+@import "./admin";
+@import "./article";
+@import "./landing";
+@import "./hacks";
+@import "./profile";
+@import "./site";
+@import "./page";
+@import "./blog";
+
+/**
+ *  variables whose value that depends on other variables
+ */
+$headings-color: $gray-900;
+
+
+/**
+ *  tweak everything that needs bootstrap utilities to be loaded
+ */
+@each $color, $value in $grays {
+  .gray-bg-#{$color} {
+    background-color: #{$value};
+  }
+}
+
+/** 
+* Overrides an existing Bootstrap class
+* 
+*   Sometimes it is not possible to customise bootstrap,
+*   unless you modify the source code.
+*   Instead, just redefine class as below is just cleaner,
+*   and it ensure you can upgrade Bootstrap's version at any time.
+*/
+html {
+
+  .btn {
+    box-shadow: 0 0 0 0 transparent, 0 0 0 0 transparent, 0 1px 1px 0 rgb(116 129 141 / 12%), 0 0 0 1px rgb(116 129 141 / 16%), 0 0 0 0 transparent, 0 0 0 0 transparent, 0 2px 5px 0 rgb(116 129 141 / 16%);
+  }
+
+  .btn-primary {
+    transition: transform .2s, background .3s, box-shadow .3s, color .3s;
+  }
+
+  .btn.btn-outline-dark:hover {
+    background-color: whitesmoke;
+    color: inherit;
+  }
+
+  a {
+    font-weight: 600;
+  }
+  .form-control {
+    margin-bottom: 1.3rem;
+  }
+  .form-control.is-valid, .form-control.is-invalid {
+    margin-bottom: 0rem;
+  }
+  .invalid-feedback, .valid-feedback {
+    margin-top: 0;
+  }
+  .form-check-input, .form-select {
+    background-color: $gray-100;
+  }
+  .form-control::placeholder { 
+    opacity: .4;
+  }
+}
+
+
+/** 
+* Overrides defaults (from Bootstrap or not)
+*/
+:root {
+  @include rfs($font-size-base, --#{$variable-prefix}body-font-size);
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  font-size: var(--#{$variable-prefix}body-font-size); 
+}

@@ -1,0 +1,97 @@
+<% triggered_validation = !!local_assigns[:triggered_validation] || !!params[:triggered_validation] %>
+
+<% errors_h = @errors_h || {} %>
+
+<%= form_with(model: [:admin, account]) do |form| %>
+
+    <%# name field  %>
+    <div class="form-group mb-1">
+      <% is_valid_name = triggered_validation && errors_h[:name].blank? && @account.profile.name.present?  %>
+      <% is_invalid_name = !!errors_h[:name]  %>
+      <%= form.label "name-input", 'Name *', class: "mb-0 fw-600" %>
+      <small id="hint_id_name" class="form-text text-muted d-block my-0">
+        Required - public, short, unique, alphanumeric name that will help to recognize this account through the application.
+      </small>
+      <%= form.text_field 'name', 
+            value: @account.profile.name, 
+            id: "name-input", 
+            class: "form-control #{"is-invalid" if is_invalid_name} #{"is-valid" if is_valid_name}", aria: ({ invalid: is_invalid_name, describedby: "name_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:name][0], class: "invalid-feedback", id: "name_message") if errors_h[:name].present? %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "name_message") if (is_valid_name)  %>
+    </div>
+
+    <%# email field  %>
+    <div class="form-group mb-1">
+      <% is_valid_email = triggered_validation && errors_h[:email].blank? && @account.email.present?  %>
+      <% is_invalid_email = !!errors_h[:email]  %>
+      <%= form.label "email-input", 'E-mail *', class: "mb-0 fw-600" %>
+      <small id="hint_id_email" class="form-text text-muted d-block my-0">
+        Required - <strong>valid</strong> email of this account
+      </small>
+      <%= form.text_field 'email', 
+            value: @account.email, 
+            id: "email-input", 
+            class: "form-control #{"is-invalid" if is_invalid_email} #{"is-valid" if is_valid_email}", aria: ({ invalid: is_invalid_email, describedby: "email_message" } if triggered_validation) %> 
+      <%= content_tag(:span, errors_h[:email][0], class: "invalid-feedback", id: "email_message") if errors_h[:email].present? %>
+      <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "email_message") if (is_valid_email)  %>
+    </div>
+
+    <% if screen != 'edit' %>
+      <%# password field  %>
+      <div class="form-group mb-1">
+        <% is_valid_password = triggered_validation && errors_h[:password].blank? && @account.password.present?  %>
+        <% is_invalid_password = !!errors_h[:password]  %>
+        <%= form.label "password-input", 'Password *', class: "mb-0 fw-600" %>
+        <small id="hint_id_password" class="form-text text-muted d-block my-0">
+          Required - a complex enough password for this new account, at least 8 characters
+        </small>
+        <%= form.password_field 'password', 
+              value: @account.password, 
+              id: "password-input",
+              required: "true",
+              pattern: "(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}",
+              title: "Password must be 8 characters including 1 uppercase letter, 1 lowercase letter and numeric characters",
+              class: "form-control #{"is-invalid" if is_invalid_password} #{"is-valid" if is_valid_password}", aria: ({ invalid: is_invalid_password, describedby: "password_message" } if triggered_validation) %> 
+        <%= content_tag(:span, errors_h[:password][0], class: "invalid-feedback", id: "password_message") if errors_h[:password].present? %>
+        <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "password_message") if (is_valid_password)  %>
+      </div>      
+    <% end %>
+
+    <%# role field  %>
+    <div class="form-group mb-1">
+      <%= form.label "role-input", 'Role *', class: "mb-0 fw-600" %>
+      <small id="hint_id_role" class="form-text text-muted d-block my-0">
+        Required - a role for this new account
+      </small>
+      <%= form.select :role, Account::ROLE.collect {|k, v| [ k, v ] }, {}, {:multiple => false, :class => "tom-select-role form-control" } %>
+    </div>
+
+  </div>
+
+  <div class="justify-content-between">
+    <div class="my-4">
+      <%= form.submit class: 'btn btn-primary btn btn-dark btn-sm px-2 me-2' %>
+      <%= link_to 'Back', admin_accounts_path, class: "btn bg-white btn-sm px-2" %>
+    </div>
+  </div>
+
+<% end %>
+
+<% content_for :custom_stylesheet do %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0/css/tom-select.bootstrap5.min.css" integrity="sha512-UJy/ItiveaheFLF2h77Suzq5Y31Pd51KxYMhyJqManLy2PxqA9ZdbszEPdUk3g/IQeQ/hzrtMIaM/PppFnuDEw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<% end %>
+<% content_for :custom_javascript do %>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0/js/tom-select.complete.min.js" integrity="sha512-tOLFqPdA0O93P0d+3NeGC2GeMAa0JpxON85laCKKTM+DN9XnBYAWPwaxGvrpsF35q9mWkZoGcji6MqYPPdMMsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+      var configRole = {
+        allowEmptyOption: false,
+        maxItems: 1, // The max number of items the user can select. 1 makes the control mono-selection, null allows an unlimited number of items.
+        <% if screen == 'new' %>
+          items: ['admin'] // Default to admin if creating a new Account
+        <% end %>
+      };
+      new TomSelect('.tom-select-role', configRole);
+    })
+  </script> 
+<% end %>

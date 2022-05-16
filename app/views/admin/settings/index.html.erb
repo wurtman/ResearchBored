@@ -1,0 +1,64 @@
+<% triggered_validation = local_assigns[:triggered_validation].present? || params[:triggered_validation].present? %>
+<% errors_h = @setting.errors.to_hash %>
+
+<div class="container">
+
+  <div class="alert alert-info d-flex flex-row justify-content-start align-items-center" style="border-radius: 0.4rem;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-info-circle me-3 d-none d-sm-block" viewBox="0 0 16 16"> <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path> <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path> </svg>
+    <p class="mb-0">
+      <span class="d-block fs-small">Settings are a 1-row table, in which you store application-wide configuration,</span>
+      <span class="d-block fs-small">that can be modified through the admin UI.</span>
+      <span class="d-block fs-small">Feel free to modify or add your own settings.</span>
+    </p>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12 col-lg-5 justify-content-start align-items-start mb-lg-2">
+      <h2 class="mb-2 mb-lg-0 fw-bold truncate h3">
+        Settings
+      </h2>
+    </div>
+    <div class="col-12 col-lg-auto flex-1 ms-auto justify-content-center align-items-end mb-lg-2">
+    </div>
+  </div>
+  <div class="card p-0 p-sm-3 p-lg-4 flex-column justify-content-center align-items-between mb-2">
+
+    <%= form_with scope: :setting, url: admin_setting_path(@setting.id), method: :put, data: { turbo: false } do |form| %>
+
+
+      <div class="form-group mb-1 ">
+        <% is_valid_shareable_draft = triggered_validation && errors_h[:shareable_draft].blank? && @setting.shareable_draft.present?  %>
+        <% is_invalid_shareable_draft = !!errors_h[:shareable_draft]  %>
+          <%= form.check_box :shareable_draft, {class: "cursor-pointer form-check-input #{"is-invalid" if is_invalid_shareable_draft} #{"is-valid" if is_valid_shareable_draft}"}, 'true', 'false' %>
+          <%= form.label "shareable_draft", "Shareable drafts ?", class: "mb-0 fw-600 ms-2 cursor-pointer" %>
+        <small id="hint_id_shareable_draft" class="form-text text-muted d-block my-0">
+          Check it if you need that even non-connected user can see an unpublished blog post
+        </small>          
+        <%= content_tag(:span, errors_h[:shareable_draft][0], class: "invalid-feedback", id: "shareable_draft_message") if is_invalid_shareable_draft %>
+        <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "shareable_draft_message") if is_valid_shareable_draft  %>
+      </div>
+
+
+      <div class="form-group mb-1 mt-3">
+        <% is_valid_clock_diff = triggered_validation && errors_h[:clock_diff].blank? && @setting.clock_diff.present?  %>
+        <% is_invalid_clock_diff = !!errors_h[:clock_diff]  %>
+        <%= form.label "clock_diff-input", "Clock difference. Currently server sees : #{Time.now.strftime("%d, %B, %Y at %-I:%M %p")}", class: "mb-0 fw-600" %>
+        <small id="hint_id_clock_diff" class="form-text text-muted d-block my-0">
+          Required. If you can't change time of your server, and your users are in another timezone.
+        </small>
+        <%= form.text_field 'clock_diff', 
+              value: @setting.clock_diff, 
+              id: "clock_diff-input", 
+              class: "form-control #{"is-invalid" if is_invalid_clock_diff} #{"is-valid" if is_valid_clock_diff}", aria: ({ invalid: is_invalid_clock_diff, describedby: "clock_diff_message" } if triggered_validation) %> 
+        <%= content_tag(:span, errors_h[:clock_diff][0], class: "invalid-feedback", id: "clock_diff_message") if is_invalid_clock_diff %>
+        <%= content_tag(:span, 'looks good !', class: "valid-feedback", id: "clock_diff_message") if is_valid_clock_diff  %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= form.submit 'Save', class: "btn btn-dark btn-sm mt-3", name: 'asked_marketing'  %>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

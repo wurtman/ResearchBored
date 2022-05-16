@@ -1,0 +1,13 @@
+<div class="container">
+  <h1 class="h3">Migration attempt was triggered.</h1>
+
+  <div class="card p-4 my-5">
+    <div class="d-flex">
+      <%= params[:message] %>
+    </div>
+  </div>
+
+  <%= link_to 'Back to Monitoring', admin_monitoring_path, class: "btn btn-primary btn btn-dark btn-sm px-3" %>
+  <%= link_to 'Back to Admin home', admin_root_path, class: "btn bg-white btn-sm px-3" %>
+
+</div>

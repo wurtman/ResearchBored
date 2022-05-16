@@ -1,0 +1,43 @@
+<footer class="container mt-5 pt-5" style="max-width: 1280px;">
+    <div class="row">
+        <div class="col-12 d-flex flex-column mb-5 col-lg-4">
+            <p class="mb-3 fw-700 text-dark">About ResearchBored</p>
+            <p class="gray-600 pe-5">ResearchBored is your internet research companion. Close the tabs, keep the information.</p>
+        </div>
+        <div class="col-12 d-flex flex-column mb-5 col-lg">
+            <!--<p class="mb-3 fw-700 text-dark">Resources</p>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/styleguide">Styleguide</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/changelog">Changelog</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/feed">RSS feed</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/sitemap.xml" target="_blank">Sitemap</a>-->
+        </div>
+        <div class="col-12 d-flex flex-column mb-5 col-lg">
+            <p class="mb-3 fw-700 text-dark">Product</p>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/about">About</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/pricing">Pricing</a>
+            <!--<a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/credits">Credits</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/faq">FAQ</a>-->
+        </div>
+        <div class="col-12 d-flex flex-column mb-5 col-lg">
+            <p class="mb-3 fw-700 text-dark">Shorcuts</p>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/login">Log in</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/create-account">Sign up</a>
+            <!--<a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/terms">Terms and conditions</a>
+            <a class="mb-2 fs-small fw-600 gray-600" rel="noopener" href="/blog">All blog articles</a>-->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex flex-column mb-5 col-md-6">
+            <div class="d-flex flex-column justify-content-start align-items-start">
+                <p class="m-0 text-muted small mb-3">Made with love @ CSU Bakersfield.</p>
+            </div>
+        </div>
+        <div class="col-12 d-flex flex-column mb-5 col-md-6 justify-content-end align-items-start align-items-md-end">
+            <p class="text-muted small flex-center pe-3"><!--Need help?--><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor">
+                    <!--<path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z">
+                    </path> -->
+                </svg> <a class="text-muted fw-bold" href="mailto:<%=ENV['APP_EMAIL_HELP']%>?subject=Help" id="bottom"><%=ENV['APP_EMAIL_HELP']%></a>
+            </p>
+        </div>
+    </div>
+</footer>

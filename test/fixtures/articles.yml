@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+simple_article:
+  slug: "a_slug"
+  kontent: "# Mardown title \\n paragraph"
+  title: "A title"
+  description: "A description"
+  image_url: "https://image.com"
+  publication_date: 2022-01-21 13:58:27
+  is_published: false
+
